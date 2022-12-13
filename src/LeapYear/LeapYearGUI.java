@@ -10,7 +10,7 @@ public class LeapYearGUI extends JFrame {
     private JTextField tfYear;
 
     public LeapYearGUI() throws HeadlessException {
-
+        boolean isLeap = false;
     }
 
     public JPanel getLeapYearFrame() {
