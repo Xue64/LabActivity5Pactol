@@ -5,6 +5,7 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
+
         SimpleCalcGUI gui = new SimpleCalcGUI();
         gui.setContentPane(gui.getPanel1());
         gui.setVisible(true);

@@ -2,6 +2,9 @@ package SimpleCalc;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SimpleCalcGUI extends JFrame {
     public JPanel getPanel1() {
@@ -61,6 +64,60 @@ public class SimpleCalcGUI extends JFrame {
 
     public SimpleCalcGUI() throws HeadlessException {
         this.setTitle("Simple Calculator");
+        btnCompute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                double num_1 = Integer.parseInt(tfNumber1.getText());
+                double num_2 = Integer.parseInt(tfNumber2.getText());
+                Double result = new Double(0);
+                char operation= cbOperations.getModel().getSelectedItem().toString().charAt(0);
+                    switch (operation) {
+                        case '+':
+                            result = num_2 + num_1;
+                            break;
+                        case '-':
+                            result = num_1 - num_2;
+                            break;
+                        case '*':
+                            result = num_1 * num_2;
+                            break;
+                        case '/':
+                            if (num_2==0){
+                                throw new ArithmeticException();
+                            }
+                            result = num_1 / num_2;
+                    }
+
+                String of_result = result.toString();
+                String resulter = new String();
+                if (result%1==0){
+                    for (int i=0; i<of_result.length(); i++){
+                        if (of_result.charAt(i)=='.'){
+                            break;
+                        } else {
+                            resulter+=of_result.charAt(i);
+                        }
+                    }
+                    getLblResult().setText(resulter);
+                } else {
+                    getLblResult().setText(of_result);
+                }
+                } catch (ArithmeticException error){
+                    JOptionPane.showMessageDialog(panel1, "Cannot Divide by Zero!");
+                    return;
+                } catch (NumberFormatException error){
+                    JOptionPane.showMessageDialog(panel1, "Not a Number (NaN) error!");
+                    return;
+                }
+                catch (Exception error){
+                    JOptionPane.showMessageDialog(panel1, "Math Error! [Check buffer overflow]");
+                    return;
+                }
+
+
+            }
+        });
     }
 }
 
