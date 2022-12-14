@@ -10,7 +10,28 @@ public class LeapYearGUI extends JFrame {
     private JTextField tfYear;
 
     public LeapYearGUI() throws HeadlessException {
-        boolean isLeap = false;
+
+        btnCheckYear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isLeap = false;
+                int year = Integer.parseInt(tfYear.getText());
+                if (year%4==0){
+                    if (year%100==0){
+                        if (year%400==0){
+                            isLeap = true;
+                        }
+                    } else {
+                        isLeap = true;
+                    }
+                }
+                if (isLeap){
+                    JOptionPane.showMessageDialog(leapYearFrame, "Leap year");
+                } else {
+                    JOptionPane.showMessageDialog(leapYearFrame, "Not a leap year");
+                }
+            }
+        });
     }
 
     public JPanel getLeapYearFrame() {
