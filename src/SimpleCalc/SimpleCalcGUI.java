@@ -81,6 +81,13 @@ public class SimpleCalcGUI extends JFrame {
                             break;
                         case '*':
                             result = num_1 * num_2;
+                            if (result > Double.MAX_VALUE){
+                                throw new NoSuchMethodException();
+                            } if (num_1>999999 && num_2>999999){
+                                throw new NoSuchMethodException();
+                            } else if (num_1>9999999 || num_2>9999999){
+                            throw new NoSuchMethodException();
+                        }
                             break;
                         case '/':
                             if (num_2==0){
@@ -110,7 +117,10 @@ public class SimpleCalcGUI extends JFrame {
                     JOptionPane.showMessageDialog(panel1, "Not a Number (NaN) error!");
                     return;
                 }
-                catch (Exception error){
+                 catch (NoSuchMethodException error){
+                    JOptionPane.showMessageDialog(panel1, "Numerical MAX Value reached");
+                    return;
+                } catch (Exception error){
                     JOptionPane.showMessageDialog(panel1, "Math Error! [Check buffer overflow]");
                     return;
                 }
