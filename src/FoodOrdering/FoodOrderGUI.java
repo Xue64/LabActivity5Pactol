@@ -2,11 +2,17 @@ package FoodOrdering;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FoodOrderGUI extends JFrame {
     private JPanel panel1;
     private JCheckBox cPizza;
     private JRadioButton rbNone;
+    HashMap<Double, Boolean> aggregation;
     private JButton btnOrder;
     private JRadioButton rb5;
     private JRadioButton rb10;
@@ -119,5 +125,56 @@ public class FoodOrderGUI extends JFrame {
 
     public FoodOrderGUI() throws HeadlessException {
         setTitle("Food Ordering System");
+        ButtonGroup btngrp = new ButtonGroup();
+        btngrp.add(rb5);
+        btngrp.add(rb10);
+        btngrp.add(rb15);
+        btngrp.add(rbNone);
+        btnOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double totalPrice = 0.00;
+                if (cPizza.isSelected()){
+                    totalPrice+=100.00;
+                }
+                if (cBurger.isSelected()){
+                    totalPrice+=80;
+                }
+                if (cFries.isSelected()){
+                    totalPrice+=65;
+                }
+                if (cSoftDrinks.isSelected()){
+                    totalPrice+=55;
+                }
+                if (cTea.isSelected()){
+                    totalPrice+=50;
+                }
+                if (cSundae.isSelected()){
+                    totalPrice+=40;
+                }
+                if (rb5.isSelected()){
+                    totalPrice -= (totalPrice * 0.05);
+                } else if (rb10.isSelected()){
+                    totalPrice -= (totalPrice * 0.1);
+                } else if (rb15.isSelected()){
+                    totalPrice -= (totalPrice * 0.15);
+                } else if (!rbNone.isSelected()){
+                    JOptionPane.showMessageDialog(getPanel1(), "You have not selected a discount option!");
+                    return;
+                }
+                String strprice = "";
+                strprice += totalPrice;
+                int index = strprice.indexOf('.');
+                int trailing = strprice.length()-index-1;
+                if (trailing==1){
+                    strprice+='0';
+                }
+                if (trailing>1){
+                    strprice = strprice.substring(0, index+3);
+                }
+
+                JOptionPane.showMessageDialog(getPanel1(), "The total price is Php " + strprice);
+            }
+        });
     }
 }
